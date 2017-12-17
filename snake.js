@@ -32,6 +32,10 @@ function Snake(){
     this.yspeed = y;
   }
 
+  this.checkDir = function(x, y){
+    return (x == this.xspeed && y == this.yspeed);
+  }
+
   this.update = function(){
     for(var i = 0; i < this.tail.length - 1; i++){
       this.tail[i] = this.tail[i + 1];
