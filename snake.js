@@ -7,7 +7,7 @@ function Snake(){
   this.tail = [];
 
   this.eat = function(pos){//if dist<1 then eat
-    var d = dist(this.x, this.y, pos.x, pos.y)
+    var d = dist(this.x + scl / 2, this.y + scl / 2, pos.x, pos.y)
     if (d < 1){
       this.total++;//increase the tail
       return true;

@@ -1,5 +1,5 @@
 var s;
-var scl = 20;
+var scl = 50;
 
 var food;//it must be an object
 
@@ -15,7 +15,14 @@ function pickLocation(){
   var rows = floor(height/scl);
   food = createVector(floor(random(cols)), floor(random(rows)));
   food.mult(scl);
+  //because the circle is drawn from his center
+  food.x+= scl / 2;
+  food.y+= scl / 2;
 }
+
+// function mousePressed() {
+//   ellipse(mouseX, mouseY, scl, scl);
+// }
 
 function draw() {
   background(51);
@@ -26,7 +33,7 @@ function draw() {
   s.update();
   s.show();
   fill(255, 0, 100);
-  rect(food.x, food.y, scl, scl);
+  ellipse(food.x, food.y, scl, scl);
 }
 
 function keyPressed(){
