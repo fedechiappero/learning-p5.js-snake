@@ -1,39 +1,45 @@
 var s;
-var scl = 20;
+var scl = 40;
+
+var playing = false;
+var dead = false;
 
 var food;//it must be an object
 
 function setup() {
   createCanvas(600, 600);//frame
-  s = new Snake();
   frameRate(10);
-  pickLocation();
+  s = new Snake();
+  
 }
-
-function pickLocation(){
-  var cols = floor(width/scl);
-  var rows = floor(height/scl);
-  food = createVector(floor(random(cols)), floor(random(rows)));
-  food.mult(scl);
-  //because the circle is drawn from his center
-  food.x+= scl / 2;
-  food.y+= scl / 2;
-}
-
-// function mousePressed() {
-//   ellipse(mouseX, mouseY, scl, scl);
-// }
 
 function draw() {
   background(51);
-  if (s.eat(food)){
-    pickLocation();
-  }
-  s.death();
-  s.update();
+  
   s.show();
-  fill(255, 0, 100);
-  ellipse(food.x, food.y, scl, scl);
+  
+  if (playing){
+    if (s.eat(food)){
+      pickLocation();
+    }
+    s.death();
+    s.update();
+    fill(255, 0, 100);
+    ellipse(food.x, food.y, scl, scl);
+  } else if (dead){
+    textSize(32);
+    fill(255, 0, 0);
+    text("YOU LOSE :( press enter to play again", 10, 30);
+  } else{
+    textSize(32);
+    fill(255);
+    text("Welcome, press enter to start", 10, 30);
+  }
+}
+
+function initialize(){
+  s = new Snake();
+  pickLocation();
 }
 
 function keyPressed(){
@@ -45,5 +51,18 @@ function keyPressed(){
     s.dir(1, 0);
   }else if (keyCode === LEFT_ARROW && !s.checkDir(1, 0)){
     s.dir(-1, 0);
+  }else if (keyCode === ENTER){
+    playing = true;
+    initialize();
   }
+}
+
+function pickLocation(){
+  var cols = floor(width/scl);
+  var rows = floor(height/scl);
+  food = createVector(floor(random(cols)), floor(random(rows)));
+  food.mult(scl);
+  //because the circle is drawn from his center
+  food.x+= scl / 2;
+  food.y+= scl / 2;
 }
