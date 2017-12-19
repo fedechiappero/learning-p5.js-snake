@@ -11,14 +11,36 @@ function Snake(){
   }
 
   this.death = function(){
+    if (this.dieByEdge() || this.dieByOwn()){
+      this.xspeed = 0;
+      this.yspeed = 0;
+      playing = false;
+      dead = true;
+      return true;
+    }else{
+      return false;
+    }
+    
+  }
+
+  this.dieByEdge = function (){
+    if (this.x < 0 || this.x + scl > width || this.y < 0 || this.y + scl > height){
+      console.log("die by edge");
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  this.dieByOwn = function (){
     for(var i = 0; i < this.tail.length; i++){
       var pos = this.tail[i];
       var d = dist(this.x, this.y, pos.x, pos.y);
-      if (d < 1){//you loos
-        this.xspeed = 0;
-        this.yspeed = 0;
-        playing = false;
-        dead = true;
+      if (d < 1){//you hit yourself
+        console.log("die by own");
+        return true;
+      }else{
+        return false;
       }
     }
   }
@@ -56,9 +78,5 @@ function Snake(){
   
     this.x = this.x + this.xspeed * scl;
     this.y = this.y + this.yspeed * scl;
-
-    //constrain the snake inside the frame
-    this.x = constrain(this.x, 0, width - scl);
-    this.y = constrain(this.y, 0, height - scl);
   }
 }

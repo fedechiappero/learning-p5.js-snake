@@ -22,8 +22,9 @@ function draw() {
     if (s.eat(food)){
       pickLocation();
     }
-    s.death();
     s.update();
+    s.death();
+    
     fill(255, 0, 100);
     ellipse(food.x, food.y, scl, scl);
   } else if (dead){
